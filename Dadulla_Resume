@@ -1,1 +1,47 @@
+<html lang="en"><head>
+    <script type="text/javascript">
+        function changeColors() {
+            const body = document.body;
+    
+            // Generate random RGB values for background color
+            const randomColor = () => Math.floor(Math.random() * 256);
+            const bgColor = `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+    
+            // Generate random RGB values for text color, ensuring it is readable
+            const textColor = `rgb(${255 - randomColor()}, ${255 - randomColor()}, ${255 - randomColor()})`;
+    
+            body.style.backgroundColor = bgColor;
+            body.style.color = textColor;
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Color</title>
 
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="change.js"></script>
+</head>
+
+<body style="background-color: rgb(102, 187, 217); color: rgb(4, 70, 39);">
+<header>
+   <a href="https://imgbb.com/"><img src="https://i.ibb.co/Svgjhn2/IMG-20230115-142623-828-2-removebg-preview.png" alt="IMG-20230115-142623-828-2-removebg-preview" class="profile-picture"/></a>
+    <div class="info">
+      <h1>Rhadler Klein Cedric Y. Umali</h1>
+      <p></p>
+	   <p>120 Conch Street</p>
+	    <p>Rock house</p>
+		 <p>Bikini bottom</p>
+		 <p>Email: 202210545@fit.edu.ph</p>
+		 <p>Telephone: 66666666666</p>
+    </div>
+	<div class="infa">
+      <h1>Categories</h1>
+	   <p>Krusty Krab</p>
+	    <p>Cook</p>
+		 <p>Kabby patty</p>
+    </div>
+  </header>
+    <button id="colorChangeButton" onclick="changeColors()">Change Colors</button>
+
+
+</body></html>
