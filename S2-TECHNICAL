@@ -24,6 +24,7 @@
 </body>
 </html>
 
+
 //css
 :root {
   --frame-color: black;
@@ -41,16 +42,23 @@
 }
 
 button {
-  margin: 5px;
-  width: 100px;
-  height: 50px;
-  border: none;
+  margin: 10px;
+  padding: 10px;
+  width: 120px;
+  border: 2px solid var(--frame-color); /* Add a colored border around the buttons */
   color: white;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
   cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.5s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+  border-color: white;
 }
 
 .violet {
@@ -86,26 +94,49 @@ button {
   height: 200px;
   background-color: white;
   position: relative;
-  transition: border-color 1s ease;
-  margin: 5px;
-  border: 5px solid var(--frame-color);
+  margin: 10px;
+  border: 5px solid;
+  border-image: linear-gradient(0deg, var(--frame-color) 0%, var(--frame-color) 100%);
+  border-image-slice: 1;
+  border-radius: 10px;
+  transition: top 1s ease, opacity 0.8s ease, border-color 1s ease; /* Adjusted transition for .box */
 }
 
-.moveDown {
-  top: 100px;
+.box.moveUp {
+  top: -100px;
+  opacity: 0;
 }
 
-.colorChange {
-  transition: border-color 1s ease;
+.box.moveDown {
+  top: 0;
 }
+
+.box.colorChange {
+  border-color: transparent; /* Set the border color to transparent during color change */
+}
+
 
 //javascript
-
 function showBox(day, frameColor) {
   let box = document.getElementById('box');
-  box.classList.remove('moveDown');
-  box.classList.remove('colorChange');
-  
+  if (!box) return;
+
+  // Clone the current box
+  let oldBox = box.cloneNode(true);
+  oldBox.style.zIndex = 1; // Place the old box above the new box
+
+  // Append the old box to the container
+  document.querySelector('.container').appendChild(oldBox);
+
+  // Get the computed style of the old box to force a reflow before the transition
+  window.getComputedStyle(oldBox).transform;
+
+  // Apply transition to the old box (slide up)
+  oldBox.style.transition = 'transform 1s ease, opacity 0.8s ease'; 
+  oldBox.style.opacity = 0;
+  oldBox.style.transform = 'translateY(-100%)';
+
+  // Continue with the rest of your showBox logic...
   let color = '';
   switch (day) {
     case 'Monday':
@@ -132,16 +163,16 @@ function showBox(day, frameColor) {
     default:
       color = 'black';
   }
-  
-  box.style.backgroundColor = 'white';
-  document.documentElement.style.setProperty('--frame-color', frameColor);
-  
-  box.classList.add('moveDown');
+
+  // Update the properties of the existing box (slide down)
+  box.style.transition = 'transform 1s ease, background-color 1s ease'; 
+  box.style.transform = 'translateY(100%)'; // Slide down
+  box.style.backgroundColor = color;
+
+  // Clean up after the transition
   setTimeout(() => {
-    box.classList.add('colorChange');
-  }, 1000);
-  setTimeout(() => {
-    box.classList.remove('colorChange');
-    box.classList.remove('moveDown');
+    oldBox.remove(); // Remove the old box from the DOM
+    box.style.transform = 'translateY(0)'; // Reset position of the new box
   }, 2000);
 }
+
