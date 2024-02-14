@@ -1,1 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="calculator.css">
+    <title>Calculator</title>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons" onmouseover="addCircle()" onmouseout="removeCircle()">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendToDisplay('<')"> &lt; </button>
+            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('*')">X</button>
+            <button onclick="appendToDisplay('7')" class="number-btn" id="btn7">7</button>
+            <button onclick="appendToDisplay('8')" class="number-btn" id="btn8">8</button>
+            <button onclick="appendToDisplay('9')" class="number-btn" id="btn9">9</button>
+            <button onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('4')" class="number-btn" id="btn4">4</button>
+            <button onclick="appendToDisplay('5')" class="number-btn" id="btn5">5</button>
+            <button onclick="appendToDisplay('6')" class="number-btn" id="btn6">6</button>
+            <button onclick="appendToDisplay('+')">+</button>
+            <button onclick="appendToDisplay('1')" class="number-btn" id="btn1">1</button>
+            <button onclick="appendToDisplay('2')" class="number-btn" id="btn2">2</button>
+            <button onclick="appendToDisplay('3')" class="number-btn" id="btn3">3</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendToDisplay('0')" class="number-btn" id="btn0">0</button>
+        </div>
+    </div>
+    <script src="calculator.js"></script>
+</body>
+</html>
+/CSS
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0; /* Change background color */
+    margin: 0;
+}
+
+.calculator {
+    width: 300px;
+    background-color: #fff; /* Change calculator background color */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#display {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #3498db; /* Change button color */
+    color: #fff; /* Change button text color */
+}
+
+button:active {
+    background-color: #000000; /* Change button color on click */
+}
+/* Add the following styles for the circle effect */
+.number-btn:hover {
+    position: relative;
+}
+
+.number-btn:hover:before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #3498db; /* Circle color */
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+/JAVASCRIPT
+let display = document.getElementById('display');
+
+function appendToDisplay(value) {
+    display.value += value;
+}
+
+function clearDisplay() {
+    display.value = '';
+}
+
+function calculate() {
+    try {
+        display.value = eval(display.value);
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
 
