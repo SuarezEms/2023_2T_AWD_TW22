@@ -1,1 +1,25 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Day Buttons</title>
+</head>
+<body>
+  <div class="container">
+    <div class="buttons">
+      <h1>Day Buttons</h1>
+      <button class="violet" onclick="showBox('Monday', 'violet')">Monday</button>
+      <button class="pink" onclick="showBox('Tuesday', 'pink')">Tuesday</button>
+      <button class="blue" onclick="showBox('Wednesday', 'blue')">Wednesday</button>
+      <button class="yellowgreen" onclick="showBox('Thursday', 'yellowgreen')">Thursday</button>
+      <button class="yellow" onclick="showBox('Friday', 'yellow')">Friday</button>
+      <button class="orange" onclick="showBox('Saturday', 'orange')">Saturday</button>
+      <button class="red" onclick="showBox('Sunday', 'red')">Sunday</button>
+    </div>
+    <div class="box" id="box"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
