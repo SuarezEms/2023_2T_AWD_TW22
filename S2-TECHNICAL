@@ -1,178 +1,103 @@
-<!DOCTYPE html>
+HTML-----<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Day Buttons</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="stylesheet" href="styles.css">
+<title>Two Box</title>
 </head>
 <body>
-  <div class="container">
-    <div class="buttons">
-      <h1>Day Buttons</h1>
-      <button class="violet" onclick="showBox('Monday', 'violet')">Monday</button>
-      <button class="pink" onclick="showBox('Tuesday', 'pink')">Tuesday</button>
-      <button class="blue" onclick="showBox('Wednesday', 'blue')">Wednesday</button>
-      <button class="yellowgreen" onclick="showBox('Thursday', 'yellowgreen')">Thursday</button>
-      <button class="yellow" onclick="showBox('Friday', 'yellow')">Friday</button>
-      <button class="orange" onclick="showBox('Saturday', 'orange')">Saturday</button>
-      <button class="red" onclick="showBox('Sunday', 'red')">Sunday</button>
-    </div>
-    <div class="box" id="box"></div>
-  </div>
-  <script src="script.js"></script>
+<div class="row">
+<div class="col-sm-4">
+<button type="button" class="btn btn-primary" style="background-color: rgba(69, 190, 79, 0.57);" onclick="moveBox('green')">Monday</button><br>
+<button type="button" class="btn btn-primary" style="background-color: rgb(14, 14, 220);" onclick="moveBox('blue')">Tuesday</button><br>
+<button type="button" class="btn btn-primary" style="background-color: rgb(97, 49, 97);" onclick="moveBox('purple')">Wednesday</button><br>
+<button type="button" class="btn btn-primary" style="background-color: rgb(255, 251, 0);" onclick="moveBox('yellow')">Thursday</button><br>
+<button type="button" class="btn btn-primary" style="background-color: rgb(4, 213, 255);" onclick="moveBox('cyan')">Friday</button><br>
+<button type="button" class="btn btn-primary" style="background-color: rgb(250, 0, 0);" onclick="moveBox('red')">Saturday</button><br>
+<button type="button" class="btn btn-primary" style="background-color: rgb(255, 0, 251);" onclick="moveBox('pink')">Sunday</button>
+</div>
+<div class="col-md-6">
+<div id="box1" class="box" ontransitionend="handleTransitionEnd(this)"></div>
+<div id="box2" class="box"></div>
+</div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
 
+/css
 
-//css
-:root {
-  --frame-color: black;
-}
-
-.container {
-  display: flex;
-  align-items: center;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px;
+.col-sm-4 {
+margin-top: 100px;
+margin-left: 50px;
 }
 
 button {
-  margin: 10px;
-  padding: 10px;
-  width: 120px;
-  border: 2px solid var(--frame-color); /* Add a colored border around the buttons */
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.5s ease, transform 0.3s ease, border-color 0.3s ease;
+width: 150px;
+height: 45px;
+margin: 18px 18px;
+transition: transform 0.3s ease-in-out;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
 
 button:hover {
-  transform: scale(1.1);
-  border-color: white;
-}
-
-.violet {
-  background-color: violet;
-}
-
-.pink {
-  background-color: pink;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.yellowgreen {
-  background-color: yellowgreen;
-}
-
-.yellow {
-  background-color: yellow;
-}
-
-.orange {
-  background-color: orange;
-}
-
-.red {
-  background-color: red;
+transform: scale(1.2);
 }
 
 .box {
-  width: 200px;
-  height: 200px;
-  background-color: white;
-  position: relative;
-  margin: 10px;
-  border: 5px solid;
-  border-image: linear-gradient(0deg, var(--frame-color) 0%, var(--frame-color) 100%);
-  border-image-slice: 1;
-  border-radius: 10px;
-  transition: top 1s ease, opacity 0.8s ease, border-color 1s ease; /* Adjusted transition for .box */
+width: 400px;
+height: 400px;
+position: absolute;
+margin-bottom: 10px;
+overflow: hidden;
 }
 
-.box.moveUp {
-  top: -100px;
-  opacity: 0;
+.box::before {
+content: '';
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+box-sizing: border-box;
+border: 10px solid var(--border-color, rgb(255, 255, 255));
+transition: background-color 1.5s ease-in-out;
 }
 
-.box.moveDown {
-  top: 0;
+#box1 {
+background-color: white;
+top: -900px;
 }
 
-.box.colorChange {
-  border-color: transparent; /* Set the border color to transparent during color change */
+#box2 {
+background-color: white;
+top: 300px;
 }
 
+/script
 
-//javascript
-function showBox(day, frameColor) {
-  let box = document.getElementById('box');
-  if (!box) return;
+function moveBox(color) {
+var box1 = document.getElementById('box1');
+var box2 = document.getElementById('box2');
 
-  // Clone the current box
-  let oldBox = box.cloneNode(true);
-  oldBox.style.zIndex = 1; // Place the old box above the new box
+box1.style.transition = 'top 1.5s ease-in-out, background-color 2.5s ease-out';
+box2.style.transition = 'top 1.5s ease-in-out, background-color 2.5s ease-out';
 
-  // Append the old box to the container
-  document.querySelector('.container').appendChild(oldBox);
-
-  // Get the computed style of the old box to force a reflow before the transition
-  window.getComputedStyle(oldBox).transform;
-
-  // Apply transition to the old box (slide up)
-  oldBox.style.transition = 'transform 1s ease, opacity 0.8s ease'; 
-  oldBox.style.opacity = 0;
-  oldBox.style.transform = 'translateY(-100%)';
-
-  // Continue with the rest of your showBox logic...
-  let color = '';
-  switch (day) {
-    case 'Monday':
-      color = 'violet';
-      break;
-    case 'Tuesday':
-      color = 'pink';
-      break;
-    case 'Wednesday':
-      color = 'blue';
-      break;
-    case 'Thursday':
-      color = 'yellowgreen';
-      break;
-    case 'Friday':
-      color = 'yellow';
-      break;
-    case 'Saturday':
-      color = 'orange';
-      break;
-    case 'Sunday':
-      color = 'red';
-      break;
-    default:
-      color = 'black';
-  }
-
-  // Update the properties of the existing box (slide down)
-  box.style.transition = 'transform 1s ease, background-color 1s ease'; 
-  box.style.transform = 'translateY(100%)'; // Slide down
-  box.style.backgroundColor = color;
-
-  // Clean up after the transition
-  setTimeout(() => {
-    oldBox.remove(); // Remove the old box from the DOM
-    box.style.transform = 'translateY(0)'; // Reset position of the new box
-  }, 2000);
+if (box1.style.top === '300px') {
+box1.style.top = '-300px';
+box2.style.setProperty('--border-color', color);
+box2.style.backgroundColor = color;
+box2.style.top = '300px';
+box1.style.backgroundColor = 'white';
+} else {
+box1.style.top = '300px';
+box1.style.setProperty('--border-color', color);
+box1.style.backgroundColor = color;
+box2.style.top = '-900px';
+box2.style.backgroundColor = 'white';
 }
-
+}
